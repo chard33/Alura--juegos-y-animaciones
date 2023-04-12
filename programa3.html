@@ -1,0 +1,38 @@
+<canvas width="600" height="400">
+	
+</canvas>
+
+<script>
+
+	const pantalla = document.querySelector("canvas"),
+	      pincel = pantalla.getContext("2d");
+
+	pincel.fillStyle = "gray";
+	pincel.fillRect(0, 0, 600, 400);
+
+	function alerta (evento) {
+		
+		pincel.strokeStyle = color[posicion];
+		pincel.beginPath();
+    	pincel.arc(evento.x - pantalla.offsetLeft, evento.y - pantalla.offsetTop, 40, 0, 2 * Math.PI);
+		pincel.stroke();
+	}
+
+	function alterarColor() {
+        
+        posicion++;
+
+        if(posicion > color.length){
+
+        	posicion = 0;
+        }
+        return false;
+    }
+
+    var color = ["blue", "red", "green"], posicion = 0;
+
+    pantalla.oncontextmenu = alterarColor;
+
+	pantalla.onclick = alerta;
+
+</script>
