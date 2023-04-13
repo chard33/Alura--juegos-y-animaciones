@@ -1,0 +1,55 @@
+<canvas width="600" height="400">
+	
+</canvas>
+
+<script>
+
+	const pantalla = document.querySelector("canvas"),
+	      pincel = pantalla.getContext("2d");
+
+	pincel.fillStyle = "gray";
+	pincel.fillRect(0, 0, 600, 400);
+
+	function disenharCircunferencia (x, y, radio, color) {
+		
+		pincel.fillStyle = color;
+		pincel.beginPath();
+		pincel.arc(x, y, radio, 0, 2 * Math.PI);
+		pincel.fill();
+		x += 20;
+	}
+
+	function disparar (evento) {
+		
+		var x = evento.x - pantalla.offsetLeft,
+			y = evento.y - pantalla.offsetTop;
+
+		console.log(`${x} - ${y}    ${posicionX} - ${posicionY}`)
+
+		if(x > posicionX - 10 && x < posicionX + 10 && y < posicionY + 10 && y > posicionY - 10){
+
+			alert("Tiro certero");
+		}
+	}
+
+	function disenharObjetivo() {
+
+		posicionX = Math.round(Math.random() * (550 - 50 + 50)),
+		posicionY = Math.round(Math.random() * (350 - 50 + 50));
+
+		pincel.fillStyle = "gray";
+  		pincel.fillRect(0, 0, 600, 400);
+
+		disenharCircunferencia(posicionX, posicionY, 30, "red");
+		disenharCircunferencia(posicionX, posicionY, 20, "white");
+		disenharCircunferencia(posicionX, posicionY, 10, "red");
+	}
+
+	var x = 20, activo = false, sentido = 1;
+	var posicionX, posicionY;
+
+	pantalla.onclick = disparar;
+
+	setInterval(disenharObjetivo, 10000);
+
+</script>
