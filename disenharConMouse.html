@@ -1,0 +1,77 @@
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    function dibujarCirculo(evento) {
+
+        obtenerPosicion(evento);
+
+        if(puedoDibujar && !((x <= 105) && (y <= 39))) {
+            
+            pincel.fillStyle = colores[color];
+            pincel.beginPath();
+            pincel.arc(x, y, 5, 0, 2 * 3.14);
+            pincel.fill();
+        }
+    }
+
+    function dibujarPaleta (colores, tamanho, posiciones) {
+
+        for (var i = 0; i < colores.length; i++) {
+
+            pincel.fillStyle = colores[i];
+            pincel.fillRect(posiciones[i], 0, tamanho, tamanho);
+        }
+    }
+
+    function habilitarDibujar(evento) {
+
+        puedoDibujar = true;
+
+        obtenerPosicion(evento);
+
+        if(x < 33 && y < 33){
+
+                color = 0;
+        }else if(x >= 33 && x < 66 && y < 33){
+
+                color = 1;
+        }else if(x >= 66 && x < 99 && y < 33){
+
+                color = 2;
+        }
+    }
+
+    function deshabilitarDibujar() {
+
+        puedoDibujar = false;
+    }
+
+    function obtenerPosicion (evento) {
+        
+        x = evento.pageX - pantalla.offsetLeft;
+        y = evento.pageY - pantalla.offsetTop;
+    }
+
+    var pantalla = document.querySelector('canvas'),
+        pincel = pantalla.getContext('2d'),
+        puedoDibujar = false,
+        colores = ["red", "green", "blue"], 
+        posiciones = [0, 33, 66],
+        tamanho = 33,
+        color = 2,
+        x,
+        y;
+
+    pincel.fillStyle = 'grey';
+    pincel.fillRect(0, 0, 600, 400);
+
+    dibujarPaleta (colores, tamanho, posiciones);
+
+    pantalla.onmousemove = dibujarCirculo;
+
+    pantalla.onmousedown = habilitarDibujar;
+
+    pantalla.onmouseup = deshabilitarDibujar;
+
+</script>
